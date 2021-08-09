@@ -1,0 +1,29 @@
+{
+  "name": "hw_23",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildDev": "webpack --mode development",
+    "buildProd": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-uglify": "^3.0.2",
+    "html-webpack-plugin": "^5.3.2",
+    "webpack": "^5.49.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "browser-sync": "^2.27.5",
+    "css-loader": "^6.2.0",
+    "jquery": "^3.6.0",
+    "style-loader": "^3.2.1"
+  }
+}
