@@ -1,19 +1,18 @@
-const path = require('path'); // встроенная библиотека в node.js, специальный модуль для работы с путями файлов(на разных опер сист использ / или \)
+const path = require('path');
 
 const PATHS = {
-    src: path.resolve(__dirname, 'src'), //__dirname в текущей папке
+    src: path.resolve(__dirname, 'src'),
     dist: path.resolve(__dirname, 'dist'),
 };
 PATHS.js = path.resolve(PATHS.src, 'js', '**', '*.js');
 
 
-// const gulp = require('gulp'); // но мы сразу использ деструкрутизацию поэтому перепишем код ниже
-const { parallel, src, dest, series, watch } = require('gulp'); //parallel - файлы копир паралельно, src - создание трубы, dest - Destination(путь назначения)
-const concat = require('gulp-concat'); //плагин для склейки наших ссылок/папок из нескольких в 1 на подключение
-const uglify = require('gulp-uglify'); //слепили, без пробелов. только для js файлов
-const cssmin = require('gulp-cssmin'); //слепливает css
+const { parallel, src, dest, series, watch } = require('gulp');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify'); 
+const cssmin = require('gulp-cssmin'); 
 const htmlmin = require('gulp-htmlmin');
-const browserSync = require('browser-sync').create(); //отслеживание файла в браузере, вместо Live Server, коряво ряботает
+const browserSync = require('browser-sync').create(); 
 
 function copyJs() {
     return src(PATHS.js)
@@ -38,13 +37,7 @@ function copyCssMin() {
         .pipe(cssmin())
         .pipe(dest('./dist/css'));;
 }
-// если бы у нас были библиотечные стили  мы бы их отдельно перенесли
-
-// function copyVenderCss() {
-//     return src(['./src/css/**/*.css']) // в [ указываю полный пусть каждого стиля через , 'ссылка' ], порядок важен
-//         .pipe(dest('./dist/css'));;
-// }
-function copyVenderJS() { //для подключения jquery
+function copyVenderJS() { 
     return src([
         './node_modules/jquery/dist/jquery.min.js',
     ])
@@ -54,7 +47,7 @@ function copyVenderJS() { //для подключения jquery
 
 function copyHtml() { 
     return src('./src/index.html')
-        .pipe(dest('./dist')); //созд трубу и в неё передаем путь к файлу, pipe - (куда ложить), а в нём dest - путь назначения
+        .pipe(dest('./dist')); 
 }
 function copyHtmlMin() { 
     return src('./src/index.html')
@@ -62,10 +55,10 @@ function copyHtmlMin() {
             collapseWhitespace: true,
             removeComments: true,
         }))
-        .pipe(dest('./dist')); //созд трубу и в неё передаем путь к файлу, pipe - (куда ложить), а в нём dest - путь назначения
+        .pipe(dest('./dist'));
 }
 
-function serve(cb) { // наблюдает за изменениями в файлах, что бы постоянно не запускать gulp build и т.д.
+function serve(cb) {
 
     watch('./src/**/*.js', parallel(copyJs,));
     watch('./src/**/*.css', parallel(copyHtml, copyCss));
